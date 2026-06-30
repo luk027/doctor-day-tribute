@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy National Doctors' Day 2026</title>
+  <meta name="description" content="A personal tribute to the doctors who heal, serve, and inspire. Happy National Doctors' Day — July 1st, 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background hue-shift wrapper -->
+  <div id="bg-wrapper">
+    <!-- Star field canvas (behind everything) -->
+    <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+    <!-- Floating light orbs -->
+    <div id="orbs-container" aria-hidden="true"></div>
+
+    <!-- Fireworks canvas (above stars, behind/above content with pointer-events:none) -->
+    <canvas id="fireworkCanvas" aria-hidden="true"></canvas>
+
+    <!-- GATE OVERLAY — tap to reveal -->
+    <div id="gate-overlay" role="button" tabindex="0" aria-label="Tap to deliver your tribute">
+      <div id="gate-content">
+        <!-- Glowing orb SVG -->
+        <div id="gate-orb">
+          <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+            <defs>
+              <radialGradient id="orbGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#f0c75e" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#d4af37" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="orbGlow">
+                <feGaussianBlur stdDeviation="6" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <circle cx="60" cy="60" r="36" fill="url(#orbGrad)" filter="url(#orbGlow)"/>
+            <circle cx="60" cy="60" r="20" fill="none" stroke="#f0c75e" stroke-width="1.5" opacity="0.6">
+              <animate attributeName="r" values="20;28;20" dur="2.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="60" cy="60" r="36" fill="none" stroke="#d4af37" stroke-width="0.8" opacity="0.3">
+              <animate attributeName="r" values="36;44;36" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.3;0.05;0.3" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Caduceus symbol inside orb -->
+            <g transform="translate(60,60) scale(0.35)" fill="none" stroke="#f5f0e6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Staff -->
+              <line x1="0" y1="-40" x2="0" y2="40"/>
+              <!-- Wings -->
+              <path d="M0,-40 C-12,-48 -24,-42 -28,-34 C-32,-26 -24,-20 -16,-22"/>
+              <path d="M0,-40 C12,-48 24,-42 28,-34 C32,-26 24,-20 16,-22"/>
+              <!-- Snakes -->
+              <path d="M0,36 C-10,28 -14,20 -10,14 C-6,8 6,8 10,14 C14,20 6,20 0,14 C-6,8 -14,0 -10,-6 C-6,-12 6,-12 10,-6 C14,0 6,0 0,-6 C-6,-12 -14,-20 -10,-26 C-6,-32 0,-34 0,-40"/>
+              <path d="M0,36 C10,28 14,20 10,14 C6,8 -6,8 -10,14 C-14,20 -6,20 0,14 C6,8 14,0 10,-6 C6,-12 -6,-12 -10,-6 C-14,0 -6,0 0,-6 C6,-12 14,-20 10,-26 C6,-32 0,-34 0,-40"/>
+            </g>
+          </svg>
+        </div>
+        <p id="gate-text" class="font-dm">Tap to deliver your tribute</p>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content" aria-hidden="true">
+      <div id="content-inner">
+        <!-- Typewriter doctor name -->
+        <div id="typewriter-container">
+          <h2 id="doctor-name" class="font-cormorant"></h2>
+          <span id="caret" aria-hidden="true">|</span>
+        </div>
+
+        <!-- ECG SVG -->
+        <div id="ecg-container" aria-hidden="true">
+          <svg id="ecg-svg" viewBox="0 0 800 120" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="ecgGlow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- ECG path: flat → P wave → QRS complex → T wave → flat -->
+            <path id="ecg-path"
+              d="M 0,60 L 100,60 L 140,60 C 155,60 165,48 175,52 L 200,60 L 230,60 L 250,58 L 270,90 L 290,10 L 310,80 L 330,55 L 360,60 L 400,60 C 420,60 440,45 460,48 L 500,60 L 600,60 L 800,60"
+              fill="none"
+              stroke="#d4af37"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              filter="url(#ecgGlow)"
+            />
+          </svg>
+        </div>
+
+        <!-- Caduceus decoration -->
+        <div id="caduceus-main" aria-hidden="true">
+          <svg viewBox="0 0 60 80" width="40" height="54" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.5">
+            <line x1="30" y1="5" x2="30" y2="75"/>
+            <path d="M30,5 C20,0 10,5 8,12 C6,19 14,22 22,20"/>
+            <path d="M30,5 C40,0 50,5 52,12 C54,19 46,22 38,20"/>
+            <path d="M30,70 C20,62 16,54 20,48 C24,42 36,42 40,48 C44,54 36,54 30,48 C24,42 16,34 20,28 C24,22 36,22 40,28 C44,34 36,34 30,28 C24,22 16,14 20,8 C24,2 30,5 30,5"/>
+            <path d="M30,70 C40,62 44,54 40,48 C36,42 24,42 20,48 C16,54 24,54 30,48 C36,42 44,34 40,28 C36,22 24,22 20,28 C16,34 24,34 30,28 C36,22 44,14 40,8 C36,2 30,5 30,5"/>
+          </svg>
+        </div>
+
+        <!-- Main Heading -->
+        <h1 id="main-heading" class="font-cormorant">Happy National Doctors' Day</h1>
+
+        <!-- Subheading -->
+        <p id="sub-heading" class="font-dm">1st July 2026</p>
+
+        <!-- Years line (conditional) -->
+        <p id="years-line" class="font-cormorant"></p>
+
+        <!-- Tribute message -->
+        <blockquote id="tribute-message" class="font-dm">
+          <p>To the ones who turn sleepless nights into second chances, and quiet diagnoses into lifetimes saved — thank you.</p>
+          <p>Your hands heal what words cannot, and your patience outlasts every long shift. Today, and every day, we honour the work you do.</p>
+        </blockquote>
+
+        <!-- Signoff -->
+        <p id="sign-off" class="font-cormorant"></p>
+
+        <!-- Reshare CTA -->
+        <div id="share-cta">
+          <button id="whatsapp-btn" class="font-dm" aria-label="Send this tribute to your doctor via WhatsApp">
+            Send this tribute to your doctor →
+          </button>
+          <button id="copy-link-btn" aria-label="Copy link to clipboard" title="Copy Link">
+            <!-- Copy icon SVG -->
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Copy confirmation toast -->
+        <div id="copy-toast" class="font-dm" role="status" aria-live="polite">Link copied!</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bloom overlay for initial black-to-navy transition -->
+  <div id="bloom-overlay" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
